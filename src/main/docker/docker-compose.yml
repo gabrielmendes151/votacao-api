@@ -1,0 +1,18 @@
+services:
+  app:
+    image: 'votacao-api:latest'
+    ports:
+      - 8080:8080
+    build:
+      context: .
+    container_name: votacao-api
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://db:27017/mydb
+
+  db:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
