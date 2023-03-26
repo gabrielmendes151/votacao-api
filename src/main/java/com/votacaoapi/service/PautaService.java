@@ -41,8 +41,6 @@ public class PautaService {
             || ObjectUtils.isEmpty(abrirSessaoRequest.getDataHorainicio())) {
             return abrirSessao(pautaId);
         } else {
-//            var dataHoraInicio = DataUtils.convertStringToDateTime(abrirSessaoRequest.getDataHorainicio());
-//            var dataHoraFim = DataUtils.convertStringToDateTime(abrirSessaoRequest.getDataHorafim());
             return abrirSessao(pautaId, abrirSessaoRequest.getDataHorainicio(), abrirSessaoRequest.getDataHorafim());
         }
     }
