@@ -32,8 +32,8 @@ public class PautaController {
 
     @PutMapping("{id}/abrir-sessao")
     public Mono<ResponseEntity<Void>> abrirSessao(@PathVariable("id") String id, @RequestBody AbrirSessaoRequest abrirSessaoRequest) {
-        return service.abrirSessao(id, abrirSessaoRequest)
-            .flatMap(result -> Mono.just(ResponseEntity.noContent().build()));
+         return service.abrirSessao(id, abrirSessaoRequest)
+             .then(Mono.just(ResponseEntity.noContent().build()));
 
     }
 
