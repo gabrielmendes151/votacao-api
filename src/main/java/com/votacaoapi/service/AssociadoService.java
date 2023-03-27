@@ -42,10 +42,10 @@ public class AssociadoService {
                     }
                     return pautasVotadasAssociadosRepository.countByAssociadoIdAndPautaId(associado.getId(),
                             sessao.getPautaId())
-                        .flatMap(value -> value > 0
-                            ? Mono.error(new ValidacaoException("Este associado já votou nesta pauta."))
-                            : Mono.empty())
-                        .then(pautasVotadasAssociadosRepository.save(PautasVotadasAssociados.create(voto, idPauta, idAssociado))
+                        .flatMap(value -> value == 0
+                            ? Mono.just(Boolean.TRUE)
+                            : Mono.error(new ValidacaoException("Este associado já votou nesta pauta.")))
+                        .flatMap(b -> pautasVotadasAssociadosRepository.save(PautasVotadasAssociados.create(voto, idPauta, idAssociado))
                             .then());
                 }));
     }

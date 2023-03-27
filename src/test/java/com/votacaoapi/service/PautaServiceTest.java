@@ -1,6 +1,7 @@
 package com.votacaoapi.service;
 
 import com.votacaoapi.enums.SessaoStatus;
+import com.votacaoapi.exceptions.NotFoundException;
 import com.votacaoapi.model.Pauta;
 import com.votacaoapi.model.Sessao;
 import com.votacaoapi.repository.PautaRepository;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -77,6 +79,19 @@ public class PautaServiceTest {
             .verify();
 
         verify(pautaRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void deveRetornarErroQuandoTentarAbrirUmaSessaoSemPauta() {
+        when(pautaRepository.findById(anyString())).thenReturn(Mono.empty());
+
+        StepVerifier
+            .create(pautaService.abrirSessao("1uuidhash", new AbrirSessaoRequest()))
+            .expectErrorMatches(throwable -> throwable instanceof NotFoundException &&
+                throwable.getMessage().equals("Pauta não encontrada"))
+            .verify();
+
+        verify(pautaRepository, never()).save(any());
     }
 
     @Test
