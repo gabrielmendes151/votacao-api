@@ -10,5 +10,5 @@ Itens a serem feitos
 
 - Add swagger
 - Tarefa bonus 1,2,3
-- Criação de testes unitarios/integração
+- Add mais teste unitarios com os fluxos de excessão(pautaServiceTest e AssociadoServiceTest)
 - Hospedar no hiroku a aplicação
