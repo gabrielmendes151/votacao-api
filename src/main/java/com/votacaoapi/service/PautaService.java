@@ -45,7 +45,7 @@ public class PautaService {
         }
     }
 
-    public Mono<Void> abrirSessao(final String pautaId, final String inicio, final String fim) {
+    private Mono<Void> abrirSessao(final String pautaId, final String inicio, final String fim) {
         return findById(pautaId)
             .flatMap(pauta ->
                 sessaoService.validar(inicio, fim)
@@ -57,7 +57,7 @@ public class PautaService {
                     .onErrorResume(Mono::error));
     }
 
-    public Mono<Void> abrirSessao(final String pautaId) {
+    private Mono<Void> abrirSessao(final String pautaId) {
         return findById(pautaId)
             .flatMap(pauta -> {
                 var sessao = Sessao.criarSessaoDefault(pauta.getId());
@@ -100,7 +100,7 @@ public class PautaService {
             .switchIfEmpty(Mono.error(new NotFoundException("Não foi encontrada nenhuma sessão para essa pauta")));
     }
 
-    public String fetchResultadoVotacao(final VotacaoPautaResponse votacaoPautaResponse) {
+    private String fetchResultadoVotacao(final VotacaoPautaResponse votacaoPautaResponse) {
         return votacaoPautaResponse.getVotosAfavor() > votacaoPautaResponse.getVotosContra()
             ? "APROVADA"
             : "NEGADA";
